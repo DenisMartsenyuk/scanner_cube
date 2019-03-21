@@ -7,7 +7,6 @@ from queue import Queue
 from config import *
 
 
-
 def main():
 
     serial = serialchat.SerialChat(Config.SerialChat.PORT, Config.SerialChat.BAUDRATE)
@@ -29,6 +28,7 @@ def main():
 
     while True:
         pass
+
 
 if __name__ == '__main__':
     main()

@@ -28,7 +28,8 @@ class SerialChat(threading.Thread, serial.Serial):
 
     def feedback_write(self, data):
         self.last_command = data
-        self.write(data) ##преобразовать данные
+        self.write(data)
+        # преобразовать данные
         while self.last_command:
             pass
 
