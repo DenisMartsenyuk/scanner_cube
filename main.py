@@ -23,7 +23,8 @@ def main():
     client.start()
 
     scan = scanning.Scan()
-    scan.set_send_function(serial.feedback_write())
+    scan.set_send_serial(serial.feedback_write())
+    scan.set_send_client(client.send_data())
     scan.start()
 
     while True:

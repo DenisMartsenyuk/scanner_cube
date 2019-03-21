@@ -1,3 +1,5 @@
+from config import *
+
 
 class Point3D:
 
@@ -13,3 +15,10 @@ class PointCloud:
 
     def add_point(self, point):
         self.point_cloud.append(point)
+
+    def clear(self):
+        self.point_cloud.clear()
+
+    def save_file(self):
+        ##сохранить в файл
+        pass
