@@ -9,4 +9,7 @@ class Point3D:
 class PointCloud:
 
     def __init__(self):
-        
+        self.point_cloud = list()
+
+    def add_point(self, point):
+        self.point_cloud.append(point)
