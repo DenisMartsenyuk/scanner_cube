@@ -1,6 +1,6 @@
 import clientchat
 import serialchat
-import scan
+import scanning
 
 from queue import Queue
 
@@ -22,34 +22,12 @@ def main():
     serial.start()
     client.start()
 
-    def lol(data):
-        serial.feedback_write(data)
-
-    scan = scan.Scan(lol)
-
-    while True:
-
-
-    """lol = clientchat.ClientChat('localhost', 9090)
-    lol.start()
-    buffer = Queue()
-    lol.set_buffer(buffer)
-    ##ser = serialchat.SerialChat('/dev/tty.usbserial-1460', 9600)
-    ##ser.start()
-    ##lol = serialchat.Lol()
+    scan = scanning.Scan()
+    scan.set_send_function(serial.feedback_write())
+    scan.start()
 
     while True:
-        if(not buffer):
-            print("plak plaka")
-        else:
-            while buffer.empty():
-                print(buffer.get())
-                ##print(x)
-                ##print(" ")
-            print("/n")
-            ##print("have")
-        sleep(0.5)"""
-
+        pass
 
 if __name__ == '__main__':
     main()
