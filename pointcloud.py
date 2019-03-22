@@ -8,16 +8,8 @@ class Point3D:
         self.y = y
         self.z = z
 
-class PointCloud:
 
-    def __init__(self):
-        self.point_cloud = list()
-
-    def add_point(self, point):
-        self.point_cloud.append(point)
-
-    def clear(self):
-        self.point_cloud.clear()
+class PointCloud(list):
 
     def save_file(self):
         ##сохранить в файл

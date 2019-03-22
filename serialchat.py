@@ -37,10 +37,9 @@ class SerialChat(threading.Thread, serial.Serial):
         while True:
             try:
                 data = self.readline()
-                if(self.last_command == data):
+                if self.last_command == data:
                     self.last_command = None
                 else:
                     self.received_data.put(data)
             except Exception:
                 self.set_connection()
-

@@ -30,7 +30,7 @@ class ClientChat(threading.Thread, socket.socket):
             self.close()
 
     def send_data(self, data): ##проверить конвертацию данных
-        if(self.is_open):
+        if self.is_open:
             self.send(data)
 
     def set_buffer(self, buffer):
