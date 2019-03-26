@@ -23,7 +23,6 @@ def main():
 
     serial = serialchat.SerialChat(Config.SerialChat.PORT, Config.SerialChat.BAUDRATE)
     #client = clientchat.ClientChat(Config.ClientChat.HOST, Config.ClientChat.PORT)
-
     serial_buffer = Queue()
     #client_buffer = Queue()
 

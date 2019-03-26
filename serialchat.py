@@ -5,41 +5,40 @@ from time import sleep
 from queue import Queue
 
 
-class SerialChat(threading.Thread, serial.Serial):
+class SerialChat(threading.Thread):
 
-    def __init__(self, serial_port, baudrate):
-        threading.Thread.__init__(self)
-        serial.Serial.__init__(self)
-        self.port = serial_port
-        self.baudrate = baudrate
+    def __init__(self, port_path, baudrate):
+        super(SerialChat, self).__init__()
+        self.serial = serial.Serial()
+        self.serial.baudrate = baudrate
+        self.port_path = port_path
         self.received_data = Queue()
         self.last_bytes = None
         self.stop_signal = ''
         self.daemon = True
 
     def set_connection(self):
-        self.close()
-        while not self.is_open:
+        self.serial.close()
+        while not self.serial.is_open:
             try:
-                self.open()
+                self.serial.open()
                 print('Connected to serial')
             except Exception:
                 pass
                 # print("fuck this")
                 # sleep(0.1)
 
-    def set_buffer(self, buffer):
+    def set_buffer(self, buffer): # property!
         self.received_data = buffer
 
-    def set_stop_signal(self, stop_signal):
+    def set_stop_signal(self, stop_signal): # property!
         self.stop_signal = stop_signal
-
 
     def feedback_write(self, data):
         data = data + self.stop_signal
         bytes_data = data.encode('utf-8')
         self.last_bytes = data
-        self.write(bytes_data)
+        self.serial.write(bytes_data)
         print("send")
         while self.last_bytes is not None:
             pass
@@ -51,13 +50,13 @@ class SerialChat(threading.Thread, serial.Serial):
     def lol(self, data):
         print(data)
 
-        self.write(data)
+        self.serial.write(data)
 
     def run(self):
         while True:
             print("potoook")
             try:
-                data = self.read_until(self.stop_signal.encode('utf-8'))
+                data = self.serial.read_until(self.stop_signal.encode('utf-8'))
                 print(data.decode('utf-8'))
 
                 if self.last_bytes:
@@ -73,3 +72,7 @@ class SerialChat(threading.Thread, serial.Serial):
             except Exception:
                 print("Fuck")
                 self.set_connection()
+
+    @property
+    def is_open(self):
+        return self.serial.is_open

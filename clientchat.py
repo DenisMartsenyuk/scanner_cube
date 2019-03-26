@@ -4,11 +4,11 @@ import socket
 from queue import Queue
 
 
-class ClientChat(threading.Thread, socket.socket):
+class ClientChat(threading.Thread):
 
     def __init__(self, host, port):
-        threading.Thread.__init__(self)
-        socket.socket.__init__(self)
+        super(ClientChat, self).__init__()
+        self.socket = socket.socket()
         self.daemon = True
         self.host = host
         self.port = port
@@ -17,9 +17,9 @@ class ClientChat(threading.Thread, socket.socket):
 
     def run(self):
         while True:
-            self.bind((self.host, self.port))
-            self.listen(1)
-            client, address = self.accept()
+            self.socket.bind((self.host, self.port))
+            self.socket.listen(1)
+            client, address = self.socket.accept()
             self.is_open = True
             while self.is_open:
                 data = client.recv(1024)
@@ -27,11 +27,13 @@ class ClientChat(threading.Thread, socket.socket):
                     self.received_data.put(data.decode('utf-8'))
                 else:
                     self.is_open = False
-            self.close()
+            self.socket.close()
 
-    def send_data(self, data): ##проверить конвертацию данных
+    def send_data(self, data): # проверить конвертацию данных
         if self.is_open:
-            self.send(data)
+            self.socket.send(data)
+        else:
+            raise Exception()
 
     def set_buffer(self, buffer):
         self.received_data = buffer
