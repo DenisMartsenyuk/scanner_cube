@@ -19,25 +19,25 @@ def kek(serial):
         #         pass
             print('kek')
 
+
 def main():
 
     serial = serialchat.SerialChat(Config.SerialChat.PORT, Config.SerialChat.BAUDRATE)
-    #client = clientchat.ClientChat(Config.ClientChat.HOST, Config.ClientChat.PORT)
+    # client = clientchat.ClientChat(Config.ClientChat.HOST, Config.ClientChat.PORT)
     serial_buffer = Queue()
-    #client_buffer = Queue()
+    # client_buffer = Queue()
 
     serial.set_stop_signal(Config.SerialChat.STOP_SIGNAL)
     serial.set_buffer(serial_buffer)
-    #client.set_buffer(client_buffer)
+    # client.set_buffer(client_buffer)
 
     serial.start()
-    #client.start()
+    # client.start()
 
     # scan = scanning.Scan()
     # scan.set_send_serial(serial.feedback_write())
     # scan.set_send_client(client.send_data())
     # scan.start()
-
 
     while True:
         sleep(1)
@@ -64,7 +64,6 @@ def main():
         #     print('kek')
         # serial.lol("LN/".encode('utf-8'))
         ##print("loloooo")
-
 
 
 if __name__ == '__main__':
