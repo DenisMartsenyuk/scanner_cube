@@ -12,5 +12,5 @@ class Point3D(object):
 class PointCloud(list):
 
     def save_file(self):
-        ##сохранить в файл
+        # todo: сохранить в файл
         pass

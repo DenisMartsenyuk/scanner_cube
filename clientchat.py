@@ -29,11 +29,11 @@ class ClientChat(threading.Thread):
                     self.is_open = False
             self.socket.close()
 
-    def send_data(self, data): # проверить конвертацию данных
+    def send_data(self, data): # todo: проверить конвертацию данных
         if self.is_open:
             self.socket.send(data)
         else:
-            raise Exception()
+            raise Exception('Sending error')
 
     def set_buffer(self, buffer):
         self.received_data = buffer

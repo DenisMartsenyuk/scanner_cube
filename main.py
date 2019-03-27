@@ -1,14 +1,14 @@
 import clientchat
-import serialchat
+from serialchat import SerialChat
 import scanning
 import threading
 
-from time import sleep #УБРАТЬ ПОТОМ
+from time import sleep # todo: УБРАТЬ ПОТОМ
 
 from queue import Queue
 
 from config import *
-
+from handlers import partition_update
 
 def kek(serial):
     while True:
@@ -21,13 +21,12 @@ def kek(serial):
 
 
 def main():
-
-    serial = serialchat.SerialChat(Config.SerialChat.PORT, Config.SerialChat.BAUDRATE)
+    serial = SerialChat(Config.SerialChat.PORT, Config.SerialChat.BAUDRATE)
     # client = clientchat.ClientChat(Config.ClientChat.HOST, Config.ClientChat.PORT)
     serial_buffer = Queue()
     # client_buffer = Queue()
 
-    serial.set_stop_signal(Config.SerialChat.STOP_SIGNAL)
+    serial.stop_signal = Config.SerialChat.STOP_SIGNAL
     serial.set_buffer(serial_buffer)
     # client.set_buffer(client_buffer)
 
