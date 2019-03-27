@@ -1,7 +1,7 @@
 from config import *
 
 
-class Point3D:
+class Point3D(object):
 
     def __init__(self, x, y, z):
         self.x = x
