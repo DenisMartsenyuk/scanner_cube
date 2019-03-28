@@ -27,12 +27,9 @@ class CallbackHandler(Handler):
 
 
 def partition_update(s: str):
-    ''' Type: data -> (Type, data) '''
+    ''' Type data -> (Type, data) '''
     try:
-        if s.find(' ') != -1:
-            type_part, _, data_part = s.partition(' ')
-        else:
-            type_part, data_part = s, ''
+        type_part, _, data_part = s.partition(' ')
     except ValueError as exc:
         raise exc
     return type_part, data_part
@@ -47,6 +44,5 @@ class CommandTypeHandler(CallbackHandler):
         try:
             command_name, _ = partition_update(update)
         except ValueError:
-            print('Format')
-            return False
+            raise Exception('Format')
         return self.command_name == command_name

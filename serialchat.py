@@ -5,6 +5,7 @@ from time import sleep
 from queue import Queue
 from handlers import *
 # [Type]: [data] [stop sig]
+from config import *
 
 
 class SerialChat(threading.Thread):
@@ -52,33 +53,19 @@ class SerialChat(threading.Thread):
     '''def set_stop_signal(self, stop_signal): # property!
         self.stop_signal = stop_signal'''
 
-    def feedback_write(self, data):
-        data = data + self.stop_signal
-        bytes_data = data.encode('utf-8')
-        self.last_bytes = data
-        self.serial.write(bytes_data)
-        print("send")
-        while self.last_bytes is not None:
-            pass
-            # print("lol")
-            # sleep(0.1)
-        print('I poluchil')
-        # sleep()
-
     def send(self, data: str):
-        print('->', data)
-        if data.startswith('Ping'):
-            sleep(1)
-            self.dispatcher.handle_update('Pong ' + data)
-       # self.serial.write(bytes(data, 'utf-8'))
+        print('->', data + Config.SerialChat.STOP_SIGNAL)
+        self.serial.write(bytes(data + Config.SerialChat.STOP_SIGNAL, 'utf-8'))
 
     def run(self):
         while True:
-            pass
-           # print("poto2ook")
-            #data = input()
-            #print('Data:' + data)
-            #self.dispatcher.handle_update(data)
+            try:
+                data = self.serial.read_until(Config.SerialChat.STOP_SIGNAL)
+                print('<-', data)
+                self.dispatcher.handle_update(data.encode('utf-8'))
+            except serial.SerialException as exc:
+                print('Reconnection')
+                self.connect()
 
     @property
     def is_open(self):

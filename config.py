@@ -1,7 +1,7 @@
 class Config:
 
     class SerialChat:
-        PORT = '/dev/tty.usbserial-1460'
+        PORT = 'com4'
         BAUDRATE = 9600
         STOP_SIGNAL = '/'
 

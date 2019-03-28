@@ -10,15 +10,6 @@ from queue import Queue
 from config import *
 from handlers import *
 
-def kek(serial):
-    while True:
-        # sleep(1)
-        # if serial.is_open:
-        #     serial.feedback_write("LN")
-        #     while serial.last_bytes:
-        #         pass
-            print('kek')
-
 
 class Application(object):
     def __init__(self):
@@ -27,31 +18,35 @@ class Application(object):
 
 def main():
     serial_chat = SerialChat(Config.SerialChat.PORT, Config.SerialChat.BAUDRATE)
+    serial_chat.connect()
+
     is_answered = False
 
     def pong_handle(update, chat):
         nonlocal is_answered
-        print('pong_handle ' + update)
         is_answered = True
+        print('Ponghandle ' + update)
 
     serial_chat.dispatcher.add_handler(CommandTypeHandler('Pong', pong_handle))
-    #serial_chat.dispatcher.add_handler(DefaultHandler())
     serial_chat.stop_signal = Config.SerialChat.STOP_SIGNAL
     serial_chat.start()
+
+
+
+    # serial_chat.dispatcher.add_handler(DefaultHandler())
 
     def feedback_send(data):
         nonlocal is_answered
         is_answered = False
-        serial_chat.send('Ping ' + data)
+        serial_chat.send(data)
         while not is_answered:
             pass
         print('Ohyett')
 
     while True:
-        feedback_send('smth_data')
-        feedback_send('some2_data')
+        feedback_send('Ping')
     # client = clientchat.ClientChat(Config.ClientChat.HOST, Config.ClientChat.PORT)
-    serial_buffer = Queue()
+    #serial_buffer = Queue()
     # client_buffer = Queue()
 
     # client.set_buffer(client_buffer)
