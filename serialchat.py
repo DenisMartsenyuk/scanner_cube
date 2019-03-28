@@ -24,7 +24,6 @@ class SerialChat(threading.Thread):
 
     def __init__(self, port_path, baudrate):
         super(SerialChat, self).__init__()
-        self.daemon = True
 
         self.serial = serial.Serial()
         self.serial.baudrate = baudrate
@@ -66,31 +65,20 @@ class SerialChat(threading.Thread):
         print('I poluchil')
         # sleep()
 
-    def lol(self, data):
-        print(data)
-
-        self.serial.write(data)
+    def send(self, data: str):
+        print('->', data)
+        if data.startswith('Ping'):
+            sleep(1)
+            self.dispatcher.handle_update('Pong ' + data)
+       # self.serial.write(bytes(data, 'utf-8'))
 
     def run(self):
         while True:
-            print("potoook")
-            try:
-                data = self.serial.read_until(self.stop_signal.encode('utf-8'))
-                self.dispatcher.handle_update(data.decode('utf-8'))
-
-                if self.last_bytes:
-                    print("IN this")
-
-                if self.last_bytes == data:
-                    print("DADADADADA")
-                    self.last_bytes = None
-                else:
-                    # print(data)
-                    # print("Prishlo")
-                    self.received_data.put(data.decode('utf-8'))
-            except Exception:
-                print("Fuck")
-                self.connect()
+            pass
+           # print("poto2ook")
+            #data = input()
+            #print('Data:' + data)
+            #self.dispatcher.handle_update(data)
 
     @property
     def is_open(self):
