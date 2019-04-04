@@ -1,5 +1,5 @@
 import clientchat
-from serialchat import SerialChat
+from serialchat import *
 import scanning
 import threading
 
@@ -17,21 +17,16 @@ class Application(object):
 
 
 def main():
-    serial_chat = SerialChat(Config.SerialChat.PORT, Config.SerialChat.BAUDRATE)
-    serial_chat.connect()
+    serial_chat = SerialChat(ConsoleConnection())
 
     is_answered = False
 
     def pong_handle(update, chat):
-        nonlocal is_answered
-        is_answered = True
-        print('Ponghandle ' + update)
+        chat.send('Work')
 
-    serial_chat.dispatcher.add_handler(CommandTypeHandler('Pong', pong_handle))
-    serial_chat.stop_signal = Config.SerialChat.STOP_SIGNAL
+    serial_chat.dispatcher.add_handler(CommandTypeHandler('Lol', pong_handle))
+    serial_chat.dispatcher.add_handler(CommandTypeHandler('Kek', lambda u, c: c.send('Kirill petux')))
     serial_chat.start()
-
-
 
     # serial_chat.dispatcher.add_handler(DefaultHandler())
 
