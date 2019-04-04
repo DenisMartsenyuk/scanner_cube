@@ -27,6 +27,33 @@ class ConsoleConnection(Connection):
         return input()
 
 
+class SerialConnection(Connection):
+    def __init__(self, port, baudrate):
+        self.serial = serial.Serial()
+        self.serial.port = port
+        self.serial.baudrate = baudrate
+
+    def connect(self):
+        while True:
+            try:
+                self.serial.open()
+            except serial.SerialException as exc:
+                print('Connection')
+            else:
+                print('Connected')
+                break
+
+    def send(self, data: str):
+        self.serial.write(bytes(data, 'utf-8'))
+
+    def read(self):
+        return self.serial.read_line().decode('utf-8')
+
+    @property
+    def is_open(self):
+        return self.serial.is_open
+
+
 class SerialChat(threading.Thread):
 
     '''

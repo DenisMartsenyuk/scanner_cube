@@ -21,10 +21,11 @@ def main():
 
     is_answered = False
 
-    def pong_handle(update, chat):
+    def lol_handle(update, chat):
         chat.send('Work')
 
-    serial_chat.dispatcher.add_handler(CommandTypeHandler('Lol', pong_handle))
+    serial_chat.dispatcher.add_handler(CommandTypeHandler('aha', lambda u, c: c.send('ohoho')))
+    serial_chat.dispatcher.add_handler(CommandTypeHandler('Lol', lol_handle))
     serial_chat.dispatcher.add_handler(CommandTypeHandler('Kek', lambda u, c: c.send('Kirill petux')))
     serial_chat.start()
 
@@ -40,44 +41,6 @@ def main():
 
     while True:
         feedback_send('Ping')
-    # client = clientchat.ClientChat(Config.ClientChat.HOST, Config.ClientChat.PORT)
-    #serial_buffer = Queue()
-    # client_buffer = Queue()
-
-    # client.set_buffer(client_buffer)
-
-    #serial.start()
-    # client.start()
-
-    # scan = scanning.Scan()
-    # scan.set_send_serial(serial.feedback_write())
-    # scan.set_send_client(client.send_data())
-    # scan.start()
-    ''' while True:
-        sleep(1)
-        while not serial.is_open:
-            pass
-        if serial.is_open:
-            serial.feedback_write("LN")'''
-
-        # sleep()
-        # if not serial_buffer.empty():
-        #     print(serial_buffer.get())
-        # else:
-        #     print('XER')
-        # if serial.is_open:
-        #      # pass
-        #     serial.feedback_write("LN")
-            #
-            # print("iopen")
-        # sleep(1)
-        # if serial.is_open:
-        #     serial.feedback_write("LN")
-        #     while serial.last_bytes:
-        #         pass
-        #     print('kek')
-        # serial.lol("LN/".encode('utf-8'))
-        ##print("loloooo")
 
 
 if __name__ == '__main__':

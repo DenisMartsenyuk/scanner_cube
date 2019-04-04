@@ -38,9 +38,10 @@ def partition_update(s: str):
 class CommandTypeHandler(CallbackHandler):
     def __init__(self, command_name: str, callback):
         super(CommandTypeHandler, self).__init__(callback)
-        self.command_name = command_name
+        self.command_name = command_name.lower()
 
     def check_update(self, update: str, chat):
+        update = update.lower()
         try:
             command_name, _ = partition_update(update)
         except ValueError:
