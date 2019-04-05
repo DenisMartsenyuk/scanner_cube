@@ -1,0 +1,6 @@
+Command types:
+    1) rotate grad
+    2) lazer on/off
+    3) go home
+    4) move height
+    5) lid -> lid 1/0

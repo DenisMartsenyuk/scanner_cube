@@ -19,17 +19,44 @@ class Application(object):
 def main():
     serial_chat = SerialChat(ConsoleConnection())
 
-    is_answered = False
+    # adding handlers
 
-    def lol_handle(update, chat):
-        chat.send('Work')
+    def feedback(func):
+        def f(*args, **kwargs):
+            nonlocal is_answered
+            is_answered = True
+            return func(*args, **kwargs)
 
-    serial_chat.dispatcher.add_handler(CommandTypeHandler('aha', lambda u, c: c.send('ohoho')))
-    serial_chat.dispatcher.add_handler(CommandTypeHandler('Lol', lol_handle))
-    serial_chat.dispatcher.add_handler(CommandTypeHandler('Kek', lambda u, c: c.send('Kirill petux')))
+        return f
+
+    @feedback
+    def rotate_handle(update, chat):
+        pass
+
+    @feedback
+    def lazer_handle(update, chat):
+        pass
+
+    @feedback
+    def gohome_handle(update, chat):
+        pass
+
+    @feedback
+    def move_handle(update, chat):
+        pass
+
+    @feedback
+    def lid_handle(update, chat):
+        pass
+
+    serial_chat.dispatcher.add_handler(CommandTypeHandler('Rotate', rotate_handle))
+    serial_chat.dispatcher.add_handler(CommandTypeHandler('Lazer', lazer_handle))
+    serial_chat.dispatcher.add_handler(CommandTypeHandler('Go home', gohome_handle))
+    serial_chat.dispatcher.add_handler(CommandTypeHandler('Lid', lid_handle))
+
     serial_chat.start()
 
-    # serial_chat.dispatcher.add_handler(DefaultHandler())
+    is_answered = False
 
     def feedback_send(data):
         nonlocal is_answered
